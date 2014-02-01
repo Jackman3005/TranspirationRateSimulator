@@ -6,7 +6,6 @@ public class Main {
         System.out.println("I'm so excited!");
         System.out.println("Zhen");
         System.out.println("Let's do it!");
-        System.out.println("Try one more...");
 	}
 
 }
