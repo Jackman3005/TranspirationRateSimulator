@@ -7,6 +7,5 @@ public class Main {
         System.out.println("Zhen");
         System.out.println("Let's do it!");
         System.out.println("DingDING");
-        System.out.println("Conflict?");
 	}
 }
