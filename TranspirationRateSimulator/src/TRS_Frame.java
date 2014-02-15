@@ -1,3 +1,5 @@
+import plot.WaterLossGraph;
+import plot.WaterLossGraphModel;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.NumberAxis;
@@ -18,7 +20,7 @@ public class TRS_Frame extends Application {
     public void start(final Stage stage) throws Exception {
         stage.setTitle("Transpiration Rate Simulator");
 
-        WaterLossGraph graph = new WaterLossGraph(new NumberAxis(), new NumberAxis());
+        WaterLossGraph graph = new WaterLossGraph(new NumberAxis(), new NumberAxis(),new WaterLossGraphModel());
         GridPane mainPane = new GridPane();
         mainPane.add(graph, 0, 0);
         
