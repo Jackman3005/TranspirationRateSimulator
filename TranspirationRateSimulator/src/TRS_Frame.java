@@ -1,3 +1,5 @@
+import plot.AxisParameterChooserAndLabel;
+import plot.PlotPanel;
 import plot.WaterLossGraph;
 import plot.WaterLossGraphModel;
 import javafx.application.Application;
@@ -22,7 +24,7 @@ public class TRS_Frame extends Application {
 
         WaterLossGraph graph = new WaterLossGraph(new NumberAxis(), new NumberAxis(),new WaterLossGraphModel());
         GridPane mainPane = new GridPane();
-        mainPane.add(graph, 0, 0);
+        mainPane.add(new PlotPanel(graph), 0, 0);
         
         Scene mainScene = new Scene(mainPane, 1000, 650, Color.LIGHTBLUE);
         stage.setScene(mainScene);

@@ -12,25 +12,25 @@ public class WaterLossGraph extends LineChart<Number, Number> {
 	public WaterLossGraph(NumberAxis xAxis, NumberAxis yAxis,
 			WaterLossGraphModel graphModel) {
 		super(xAxis, yAxis);
-		// defining the axes
+		
 		yAxis.setLabel("H20 Loss per Minute");
-
 		this.setTitle("Transpiration Rate Simulatoin");
-
 		xAxis.setLabel("");
 
-		// defining a series
 
-		List<javafx.scene.chart.XYChart.Series<Number, Number>> allLineSeries = graphModel
+		List<XYChart.Series<Number, Number>> allLineSeries = graphModel
 				.getAllLineSeries();
+		
 		configureAxisRangesAndTickMarks(xAxis, yAxis, allLineSeries);
 
 		this.setCreateSymbols(false);
 		this.setLegendVisible(false);
+		
 		for (Series<Number, Number> series : allLineSeries) {
 			this.getData().add(series);
 		}
-
+		
+		
 	}
 
 	private void configureAxisRangesAndTickMarks(NumberAxis xAxis,
