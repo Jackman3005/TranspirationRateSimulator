@@ -17,8 +17,8 @@ public class WaterLossAlgorithm {
         double dwv, ast, gst, gias, gleaf, gbl, gttal, cias, cair, dc, jwv, wl, cwv, waterloss;
 
         // These only rely on user input for calculations
-        dwv = (2.13*(10^-5))*(Math.pow((temperature+273)/273,1.8));
-        ast = Math.PI*(Math.pow(Math.pow(stomaRadius*10,-6),2));
+        dwv = (2.13 * Math.pow(10,-5))*(Math.pow(((temperature + 273) / 273),1.8));
+        ast = Math.PI*(Math.pow((stomaRadius * Math.pow(10,-6)),2));
         cwv = 2.848 + (0.1082 * temperature) + ((3.283 * Math.pow(10, -4)) * Math.pow(temperature, 2))
                 + ((2.06 * Math.pow(10, -5)) * Math.pow(temperature, 3));
         gbl = dwv /(4*Math.pow((leafWidth/100)/((windspeed+0.00001) * MP),0.5));
