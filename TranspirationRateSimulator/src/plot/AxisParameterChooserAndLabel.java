@@ -1,16 +1,9 @@
 package plot;
 
-import java.awt.event.MouseMotionListener;
-import java.beans.EventHandler;
-import java.util.Arrays;
-
-import javafx.event.EventType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-
-import com.sun.beans.decoder.ElementHandler;
 import com.sun.javafx.collections.ObservableListWrapper;
+import javafx.scene.control.ComboBox;
+
+import java.util.Arrays;
 
 public class AxisParameterChooserAndLabel extends
 		ComboBox<SimulationParameters> {
@@ -21,7 +14,7 @@ public class AxisParameterChooserAndLabel extends
 				Arrays.asList(SimulationParameters.values()));
 		this.setItems(parameters);
 		this.getSelectionModel().selectFirst();
-		this.backgroundProperty().set(Background.EMPTY);
+		//this.backgroundProperty().set(Background.EMPTY);
 		
 
 	}
