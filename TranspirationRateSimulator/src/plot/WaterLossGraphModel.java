@@ -1,43 +1,54 @@
 package plot;
 
-import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
+import algorithm.LineBuilder;
+import algorithm.ParameterPackage;
 
 public class WaterLossGraphModel  {
 
 	
-	public WaterLossGraphModel() {
-	}
+	
+	private SimulationParameter independentParameter = SimulationParameter.LeafWidth;
+	private List<WaterLossGraphModelObserverInterface> observers = new ArrayList<>();
+
 	
 	public List<XYChart.Series<Number, Number>> getAllLineSeries(){
+		ArrayList<Series<Number, Number>> listOfSeries = new ArrayList<XYChart.Series<Number, Number>>();
 		
 		XYChart.Series<Number, Number> series1 = new XYChart.Series<Number, Number>();
-        ArrayList<Pair> line = LineBuilder.getLine(SimulationParameters.LeafWidth, 1, 10, 1, 100, 200, 5, 15, 20, 50, 20);
+		ParameterPackage parameterPackage = new ParameterPackage(1, 100, 200, 5, 15, 20,50,20);
+        ArrayList<Pair> line = LineBuilder.getLine(independentParameter, 1, 100, parameterPackage);
 
         for (Pair p : line){
             series1.getData().add(new XYChart.Data<Number, Number>(p.getXValue(), p.getYValue()));
         }
-/*		// populating the series with data
-		series1.getData().add(new XYChart.Data<Number, Number>(10, 4));
-		series1.getData().add(new XYChart.Data<Number, Number>(14, 13));
-		series1.getData().add(new XYChart.Data<Number, Number>(17, 17));
-		series1.getData().add(new XYChart.Data<Number, Number>(20, 23));
-*/
-		XYChart.Series<Number, Number> series2 = new XYChart.Series<Number, Number>();
-		// populating the series with data
-		series2.getData().add(new XYChart.Data<Number, Number>(10, 14));
-		series2.getData().add(new XYChart.Data<Number, Number>(14, 11));
-		series2.getData().add(new XYChart.Data<Number, Number>(17, 13));
-		series2.getData().add(new XYChart.Data<Number, Number>(20, 7));
 
-		ArrayList<Series<Number, Number>> listOfSeries = new ArrayList<XYChart.Series<Number, Number>>();
 		listOfSeries.add(series1);
-		//listOfSeries.add(series2);
 		
 		return listOfSeries;
+	}
+
+	public void setIndependentParameter(SimulationParameter parameter) {
+		this.independentParameter = parameter;
+		notifyObserver();
+	}
+
+	public void addObserver(WaterLossGraphModelObserverInterface observer) {
+		this.observers.add(observer);
+	}
+	
+	public void removeObserver(WaterLossGraphModelObserverInterface observer) {
+		this.observers.remove(observer);
+	}
+	
+	private void notifyObserver() {
+		for (WaterLossGraphModelObserverInterface observer : this.observers ) {
+			observer.graphModelHasChanged();
+		}
 	}
 	
 	

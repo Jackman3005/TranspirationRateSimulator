@@ -1,11 +1,11 @@
-import plot.SimulationParameters;
+import plot.SimulationParameter;
 import TestHelpers.TestCaseHelper;
 
 
 public class SimulationParametersTest extends TestCaseHelper{
 
 	public void testParametersHaveCorrectViewableNames() throws Exception {
-		SimulationParameters[] values = SimulationParameters.values();
+		SimulationParameter[] values = SimulationParameter.values();
 		assertEquals(8,values.length);
 		assertEquals("Leaf Width (cm)", values[0].toString());
 		assertEquals("Leaf Area (cm²)", values[1].toString());

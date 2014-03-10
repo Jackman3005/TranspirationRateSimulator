@@ -1,4 +1,4 @@
-package plot;
+package algorithm;
 
 /**
  * @author: Levi
@@ -12,8 +12,18 @@ public class WaterLossAlgorithm {
     private static final double HIAS = 1.0;
     private static final double MP = 0.4470;
 
-    public static double getWaterLoss (double leafWidth, double leafArea, double stomaDensity,
-                       double stomaRadius, double stomaDepth, double temperature, double humidity, double windspeed) {
+    public static double getWaterLoss (ParameterPackage parameterPackage) {
+    	
+		double leafWidth = parameterPackage.getLeafWidth();
+		double leafArea = parameterPackage.getLeafArea();
+		double stomaDensity = parameterPackage.getStomaDensity();
+		double stomaRadius = parameterPackage.getStomaRadius();
+		double stomaDepth = parameterPackage.getStomaDepth();
+		double temperature = parameterPackage.getTemperature();
+		double humidity = parameterPackage.getHumidity();
+		double windspeed = parameterPackage.getWindspeed();
+    	
+    	
         double dwv, ast, gst, gias, gleaf, gbl, gttal, cias, cair, dc, jwv, wl, cwv, waterloss;
 
         // These only rely on user input for calculations

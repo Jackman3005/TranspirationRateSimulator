@@ -9,28 +9,45 @@ import javafx.scene.chart.XYChart;
 
 public class WaterLossGraph extends LineChart<Number, Number> {
 
+	private WaterLossGraphModel graphModel;
+	private NumberAxis xAxis2;
+	private NumberAxis yAxis2;
+
+	private final class RedrawLinesObserver implements
+			WaterLossGraphModelObserverInterface {
+		@Override
+		public void graphModelHasChanged() {
+			WaterLossGraph.this.plotLines();
+		}
+	}
+
 	public WaterLossGraph(NumberAxis xAxis, NumberAxis yAxis,
 			WaterLossGraphModel graphModel) {
 		super(xAxis, yAxis);
-		
+		xAxis2 = xAxis;
+		yAxis2 = yAxis;
+		this.graphModel = graphModel;
+		this.setCreateSymbols(false);
+		this.setLegendVisible(false);
+
 		yAxis.setLabel("H20 Loss per Minute");
 		this.setTitle("Transpiration Rate Simulatoin");
 		xAxis.setLabel("");
 
+		graphModel.addObserver(new RedrawLinesObserver());
 
+		plotLines();
+	}
+
+	private void plotLines() {
+		this.getData().clear();
 		List<XYChart.Series<Number, Number>> allLineSeries = graphModel
 				.getAllLineSeries();
-		
-		configureAxisRangesAndTickMarks(xAxis, yAxis, allLineSeries);
 
-		this.setCreateSymbols(false);
-		this.setLegendVisible(false);
-		
+		configureAxisRangesAndTickMarks(this.xAxis2, this.yAxis2, allLineSeries);
 		for (Series<Number, Number> series : allLineSeries) {
 			this.getData().add(series);
 		}
-		
-		
 	}
 
 	private void configureAxisRangesAndTickMarks(NumberAxis xAxis,

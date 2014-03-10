@@ -1,5 +1,5 @@
 package plot;
-public enum SimulationParameters {
+public enum SimulationParameter {
 	LeafWidth {
 		public String toString() {
 			return "Leaf Width (cm)";

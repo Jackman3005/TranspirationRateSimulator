@@ -1,20 +1,18 @@
 package plot;
 
-import com.sun.javafx.collections.ObservableListWrapper;
-import javafx.scene.control.ComboBox;
-
 import java.util.Arrays;
 
-public class AxisParameterChooserAndLabel extends
-		ComboBox<SimulationParameters> {
+import javafx.scene.control.ComboBox;
 
+import com.sun.javafx.collections.ObservableListWrapper;
+
+public class AxisParameterChooserAndLabel extends ComboBox<SimulationParameter> {
 
 	public AxisParameterChooserAndLabel() {
-		ObservableListWrapper<SimulationParameters> parameters = new ObservableListWrapper<SimulationParameters>(
-				Arrays.asList(SimulationParameters.values()));
+		ObservableListWrapper<SimulationParameter> parameters = new ObservableListWrapper<SimulationParameter>(
+				Arrays.asList(SimulationParameter.values()));
 		this.setItems(parameters);
 		this.getSelectionModel().selectFirst();
-		//this.backgroundProperty().set(Background.EMPTY);
 		
 
 	}
