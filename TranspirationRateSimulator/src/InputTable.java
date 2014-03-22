@@ -21,10 +21,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
  
-@SuppressWarnings("rawtypes")
 public class InputTable extends TableView{
  
-    private TableView<Parameter> table = new TableView<Parameter>();
     private final ObservableList<Parameter> data =
             FXCollections.observableArrayList(
             new Parameter("Leaf width (cm)", ""),
@@ -36,15 +34,12 @@ public class InputTable extends TableView{
             new Parameter("Relative humidity of air (%)", ""),
             new Parameter("Windspeed (mph)", ""));
  
-     @SuppressWarnings({ "unchecked" })
-	public InputTable (Stage stage1){
-    	 
-        Scene scene = new Scene(new Group());
+	public InputTable (){
  
         final Label label = new Label("Parameter Input Table");
         label.setFont(new Font("Arial", 20));
  
-        table.setEditable(true);
+        this.setEditable(true);
  
         TableColumn firstNameCol = new TableColumn("Parameter");
         firstNameCol.setMinWidth(100);
@@ -60,8 +55,8 @@ public class InputTable extends TableView{
         lastNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
-        table.setItems(data);
-        table.getColumns().addAll(firstNameCol, lastNameCol);
+        this.setItems(data);
+        this.getColumns().addAll(firstNameCol, lastNameCol);
  
         final TextField addFirstName = new TextField();
         addFirstName.setPromptText("Parameters");
@@ -71,13 +66,12 @@ public class InputTable extends TableView{
         addLastName.setPromptText("Numbers");
  
  
-        final VBox vbox = new VBox();
-        vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, table);
+//        final VBox vbox = new VBox();
+//        vbox.setSpacing(5);
+//        vbox.setPadding(new Insets(10, 0, 0, 10));
+//        vbox.getChildren().addAll(label, this);
  
-        ((Group) scene.getRoot()).getChildren().addAll(vbox);
-        
+
      
     }
  

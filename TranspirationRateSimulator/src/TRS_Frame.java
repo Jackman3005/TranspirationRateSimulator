@@ -21,7 +21,8 @@ public class TRS_Frame extends Application {
 
         GridPane mainPane = new GridPane();
         mainPane.add(new PlotPanel(new WaterLossGraphModel()), 0, 0);
-        mainPane.add(new InputTable(stage), 1, 0);
+        mainPane.add(new InputTable(), 1, 0);
+        mainPane.add(new TheOutputTable(), 0, 1);
         
         Scene mainScene = new Scene(mainPane, 1000, 650, Color.LIGHTBLUE);
         stage.setScene(mainScene);
