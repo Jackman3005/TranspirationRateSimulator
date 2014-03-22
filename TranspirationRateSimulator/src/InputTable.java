@@ -2,24 +2,13 @@
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-//import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
  
 public class InputTable extends TableView{
  
@@ -33,7 +22,7 @@ public class InputTable extends TableView{
             new Parameter("Temperature (C)",""),
             new Parameter("Relative humidity of air (%)", ""),
             new Parameter("Windspeed (mph)", ""));
- 
+    
 	public InputTable (){
  
         final Label label = new Label("Parameter Input Table");
@@ -41,20 +30,20 @@ public class InputTable extends TableView{
  
         this.setEditable(true);
  
-        TableColumn firstNameCol = new TableColumn("Parameter");
+        TableColumn firstNameCol = new TableColumn<String,String>("Parameter");
         firstNameCol.setMinWidth(100);
         firstNameCol.setCellValueFactory(
             new PropertyValueFactory<Parameter, String>("firstName"));
         firstNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
-       
-        @SuppressWarnings({ })
-		TableColumn lastNameCol = new TableColumn("Number");
-        lastNameCol.setMinWidth(100);
+        
+        
+		TableColumn lastNameCol = new TableColumn<String,Double>("Number");
+        lastNameCol.setMinWidth(87);
         lastNameCol.setCellValueFactory(
             new PropertyValueFactory<Parameter, String>("lastName"));
         lastNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
 
-
+        
         this.setItems(data);
         this.getColumns().addAll(firstNameCol, lastNameCol);
  
@@ -64,15 +53,7 @@ public class InputTable extends TableView{
         final TextField addLastName = new TextField();
         addLastName.setMaxWidth(lastNameCol.getPrefWidth());
         addLastName.setPromptText("Numbers");
- 
- 
-//        final VBox vbox = new VBox();
-//        vbox.setSpacing(5);
-//        vbox.setPadding(new Insets(10, 0, 0, 10));
-//        vbox.getChildren().addAll(label, this);
- 
-
-     
+   
     }
  
     public static class Parameter {
@@ -102,7 +83,7 @@ public class InputTable extends TableView{
         }
     }
     
-    class EditingCell extends TableCell<Parameter, Double> {
+  /* class EditingCell extends TableCell<Parameter, Double> {
     	 
         private TextField textField;
        
@@ -169,5 +150,5 @@ public class InputTable extends TableView{
         private String getString() {
             return getItem() == null ? "" : getItem().toString();
         }
-    }
+    }*/
 }
