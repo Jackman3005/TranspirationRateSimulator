@@ -12,11 +12,11 @@ import plot.SimulationParameter;
 public class LineBuilder {
 	private static final int PIXEL_RANGE = 200;
 
-
-	public static ArrayList<Pair> getLine(SimulationParameter independentParameter,
-			int min, int max, ParameterPackage parameterPackage) {
+	public static ArrayList<Pair> getLine(
+			SimulationParameter independentParameter, double min, double max,
+			ParameterPackage parameterPackage) {
 		ArrayList<Pair> lineArray = new ArrayList<Pair>();
-		double increment = ((double) (max - min)) / PIXEL_RANGE;
+		double increment = (max - min) / PIXEL_RANGE;
 		for (double i = min; i < max; i += increment) {
 			switch (independentParameter) {
 			case LeafWidth:
@@ -44,8 +44,9 @@ public class LineBuilder {
 				parameterPackage.setWindspeed(i);
 				break;
 			}
-			
-			lineArray.add(new Pair(i,WaterLossAlgorithm.getWaterLoss(parameterPackage)));
+
+			lineArray.add(new Pair(i, WaterLossAlgorithm
+					.getWaterLoss(parameterPackage)));
 		}
 		return lineArray;
 	}
