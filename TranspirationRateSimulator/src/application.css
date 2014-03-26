@@ -1,0 +1,5 @@
+.root {
+     -fx-background-image: url("leaf.gif");
+     -fx-background-repeat: stretch;  
+     
+}
