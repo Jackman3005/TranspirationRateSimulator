@@ -16,24 +16,41 @@ public class WaterLossGraphModel {
 	private double rangeMaximum = 100;
 	private double tickMarkIncrement = (this.rangeMaximum - this.rangeMinimum) / 6.0;
 
-	public List<XYChart.Series<Number, Number>> getAllLineSeries() {
-		ArrayList<Series<Number, Number>> listOfSeries = new ArrayList<XYChart.Series<Number, Number>>();
+	public List<XYChart.Series<Number, Number>> getAllLineSeriesForPlotting() {
+		double incrementBetweenDataPoints = (this.rangeMaximum - this.rangeMinimum) / 200;
 
-		XYChart.Series<Number, Number> series1 = new XYChart.Series<Number, Number>();
+		ArrayList<Series<Number, Number>> listOfLineSeriesForPloting = new ArrayList<XYChart.Series<Number, Number>>();
+
+		for (List<Pair> list : getDataPointsForAllLines(incrementBetweenDataPoints)) {
+			Series<Number, Number> series = new Series<Number, Number>();
+			for (Pair p : list) {
+				series.getData().add(
+						new XYChart.Data<Number, Number>(p.getXValue(), p
+								.getYValue()));
+			}
+			listOfLineSeriesForPloting.add(series);
+		}
+		return listOfLineSeriesForPloting;
+	}
+
+	private List<List<Pair>> getDataPointsForAllLines(
+			double incrementBetweenDataPoints) {
+
 		ParameterPackage parameterPackage = new ParameterPackage(1, 100, 200,
 				5, 15, 20, 50, 20);
-		ArrayList<Pair> line = LineBuilder.getLine(this.independentParameter,
-				this.rangeMinimum, this.rangeMaximum, parameterPackage);
+		ArrayList<ParameterPackage> listOfUserEnteredParameterPackages = new ArrayList<ParameterPackage>();
+		listOfUserEnteredParameterPackages.add(parameterPackage);
 
-		for (Pair p : line) {
-			series1.getData().add(
-					new XYChart.Data<Number, Number>(p.getXValue(), p
-							.getYValue()));
+		ArrayList<List<Pair>> listOfLineData = new ArrayList<List<Pair>>();
+		for (ParameterPackage setOfParameters : listOfUserEnteredParameterPackages) {
+			ArrayList<Pair> line = LineBuilder.getLine(
+					this.independentParameter, this.rangeMinimum,
+					this.rangeMaximum, setOfParameters,
+					incrementBetweenDataPoints);
+			listOfLineData.add(line);
 		}
 
-		listOfSeries.add(series1);
-
-		return listOfSeries;
+		return listOfLineData;
 	}
 
 	public void setIndependentParameter(SimulationParameter parameter) {
@@ -75,4 +92,23 @@ public class WaterLossGraphModel {
 		notifyObserver();
 	}
 
+	public SimulationParameter getIndependentVariable() {
+		return this.independentParameter;
+	}
+
+	public List<List<OutputData>> getOutputTableData() {
+		List<List<Pair>> allLineSeries = getDataPointsForAllLines(this.tickMarkIncrement);
+
+		List<List<OutputData>> outputDataForAllLines = new ArrayList<>();
+		for (List<Pair> lineData : allLineSeries) {
+			ArrayList<OutputData> outputData = new ArrayList<OutputData>();
+			for (Pair pair : lineData) {
+				outputData.add(new OutputData(pair.getXValue(), pair
+						.getYValue()));
+			}
+			outputDataForAllLines.add(outputData);
+		}
+
+		return outputDataForAllLines;
+	}
 }

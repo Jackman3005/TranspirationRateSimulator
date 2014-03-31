@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -14,27 +15,32 @@ import plot.WaterLossGraphModel;
  */
 
 public class TRS_Frame extends Application {
-    public static void main(String[] args) {
-        launch(args);
-    }
-    @Override
-    public void start(final Stage stage) throws Exception {
-        stage.setTitle("Transpiration Rate Simulator");
+	public static void main(String[] args) {
+		launch(args);
+	}
 
-        GridPane mainPane = new GridPane();
-        mainPane.getColumnConstraints().add(new ColumnConstraints(600)); 
-        mainPane.getColumnConstraints().add(new ColumnConstraints(500)); 
-        mainPane.getRowConstraints().add(new RowConstraints(450)); 
-        mainPane.getRowConstraints().add(new RowConstraints(500)); 
-        
-        mainPane.add(new PlotPanel(new WaterLossGraphModel()), 0, 0);
-        mainPane.add(new InputTable(), 1, 0);
-        mainPane.add(new TheOutputTable(), 0, 1);
-	    mainPane.add(new Leaf().play(stage),1,1);
-        
-        Scene mainScene = new Scene(mainPane, 1000, 650, Color.LIGHTBLUE);
-        stage.setScene(mainScene);
-        stage.show();
+	@Override
+	public void start(final Stage stage) throws Exception {
+		stage.setTitle("Transpiration Rate Simulator");
 
-    }
+		GridPane mainPane = new GridPane();
+		mainPane.setVgap(25);
+		mainPane.setHgap(25);
+		mainPane.setPadding(new Insets(15));
+		mainPane.getColumnConstraints().add(new ColumnConstraints(500));
+		mainPane.getColumnConstraints().add(new ColumnConstraints(400));
+		mainPane.getRowConstraints().add(new RowConstraints(400));
+		mainPane.getRowConstraints().add(new RowConstraints(200));
+
+		WaterLossGraphModel graphModel = new WaterLossGraphModel();
+		mainPane.add(new PlotPanel(graphModel), 0, 0);
+		mainPane.add(new InputTable(), 1, 0);
+		mainPane.add(new OutputTable(graphModel), 0, 1);
+		// mainPane.add(new Leaf().play(stage),1,1);
+
+		Scene mainScene = new Scene(mainPane, 1000, 650, Color.LIGHTBLUE);
+		stage.setScene(mainScene);
+		stage.show();
+
+	}
 }

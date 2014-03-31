@@ -10,14 +10,12 @@ import plot.SimulationParameter;
  * @version: 2/16/14
  */
 public class LineBuilder {
-	private static final int PIXEL_RANGE = 200;
 
 	public static ArrayList<Pair> getLine(
 			SimulationParameter independentParameter, double min, double max,
-			ParameterPackage parameterPackage) {
+			ParameterPackage parameterPackage, double spacingBetweenDataPoints) {
 		ArrayList<Pair> lineArray = new ArrayList<Pair>();
-		double increment = (max - min) / PIXEL_RANGE;
-		for (double i = min; i < max; i += increment) {
+		for (double i = min; i < max; i += spacingBetweenDataPoints) {
 			switch (independentParameter) {
 			case LeafWidth:
 				parameterPackage.setLeafWidth(i);

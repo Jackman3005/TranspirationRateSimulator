@@ -42,7 +42,7 @@ public class WaterLossGraph extends LineChart<Number, Number> {
 	private void plotLines() {
 		getData().clear();
 		List<XYChart.Series<Number, Number>> allLineSeries = this.graphModel
-				.getAllLineSeries();
+				.getAllLineSeriesForPlotting();
 
 		configureAxisRangesAndTickMarks(this.xAxis2, this.yAxis2, allLineSeries);
 		for (Series<Number, Number> series : allLineSeries) {
