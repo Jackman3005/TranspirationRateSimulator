@@ -7,27 +7,28 @@ public enum SimulationParameter {
 	},
 	LeafArea {
 		public String toString() {
-			return "Leaf Area (cm²)";
+
+			return "Leaf Area (cmÂ²)";
 		}
 	},
 	StomaDensity {
 		public String toString() {
-			return "Stoma Density (#/million²)";
+			return "Stoma Density (#/millionï¿½)";
 		}
 	},
 	StomaRadius {
 		public String toString() {
-			return "Stoma Radius (µm)";
+			return "Stoma Radius (Âµm)";
 		}
 	},
 	StomaDepth {
 		public String toString() {
-			return "Stoma Depth (µm)";
+			return "Stoma Depth (Âµm)";
 		}
 	},
 	Temperature {
 		public String toString() {
-			return "Temperature (c)";
+			return "Temperature (Â°C)";
 		}
 	},
 	RelativeHumidityOfAir {
@@ -39,7 +40,7 @@ public enum SimulationParameter {
 		public String toString() {
 			return "Wind Speed (mph)";
 		}
-	};
+	}
 
 
 }

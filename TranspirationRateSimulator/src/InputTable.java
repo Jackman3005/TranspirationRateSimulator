@@ -19,6 +19,7 @@ public class InputTable extends TableView<SimulationParameter> {
 		setEditable(true);
 		setMaxHeight(219);
 
+
 		TableColumn<SimulationParameter, String> parameterNameColumn = new TableColumn<SimulationParameter, String>(
 				"Parameter");
 		parameterNameColumn.setMinWidth(160);

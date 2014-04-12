@@ -3,8 +3,7 @@
  * @version: 3/1/14
  */
 
-import java.util.List;
-
+import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -12,7 +11,7 @@ import plot.OutputData;
 import plot.WaterLossGraphModel;
 import plot.WaterLossGraphModelObserverInterface;
 
-import com.sun.javafx.collections.ObservableListWrapper;
+import java.util.List;
 
 public class OutputTable extends TableView<OutputData> {
 

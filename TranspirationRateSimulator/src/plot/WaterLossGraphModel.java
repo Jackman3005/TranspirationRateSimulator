@@ -1,12 +1,12 @@
 package plot;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
 import algorithm.LineBuilder;
 import algorithm.ParameterPackage;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WaterLossGraphModel {
 
@@ -19,7 +19,7 @@ public class WaterLossGraphModel {
 	public List<XYChart.Series<Number, Number>> getAllLineSeriesForPlotting() {
 		double incrementBetweenDataPoints = (this.rangeMaximum - this.rangeMinimum) / 200;
 
-		ArrayList<Series<Number, Number>> listOfLineSeriesForPloting = new ArrayList<XYChart.Series<Number, Number>>();
+		ArrayList<Series<Number, Number>> listOfLineSeriesForPlotting = new ArrayList<XYChart.Series<Number, Number>>();
 
 		for (List<Pair> list : getDataPointsForAllLines(incrementBetweenDataPoints)) {
 			Series<Number, Number> series = new Series<Number, Number>();
@@ -28,9 +28,9 @@ public class WaterLossGraphModel {
 						new XYChart.Data<Number, Number>(p.getXValue(), p
 								.getYValue()));
 			}
-			listOfLineSeriesForPloting.add(series);
+			listOfLineSeriesForPlotting.add(series);
 		}
-		return listOfLineSeriesForPloting;
+		return listOfLineSeriesForPlotting;
 	}
 
 	private List<List<Pair>> getDataPointsForAllLines(
@@ -38,10 +38,14 @@ public class WaterLossGraphModel {
 
 		ParameterPackage parameterPackage = new ParameterPackage(1, 100, 200,
 				5, 15, 20, 50, 20);
+        ParameterPackage parameterPackage2 = new ParameterPackage(1, 100, 200,
+                15, 20, 30, 50, 20);
 		ArrayList<ParameterPackage> listOfUserEnteredParameterPackages = new ArrayList<ParameterPackage>();
 		listOfUserEnteredParameterPackages.add(parameterPackage);
+        listOfUserEnteredParameterPackages.add(parameterPackage2);
 
-		ArrayList<List<Pair>> listOfLineData = new ArrayList<List<Pair>>();
+
+        ArrayList<List<Pair>> listOfLineData = new ArrayList<List<Pair>>();
 		for (ParameterPackage setOfParameters : listOfUserEnteredParameterPackages) {
 			ArrayList<Pair> line = LineBuilder.getLine(
 					this.independentParameter, this.rangeMinimum,
@@ -52,6 +56,8 @@ public class WaterLossGraphModel {
 
 		return listOfLineData;
 	}
+
+
 
 	public void setIndependentParameter(SimulationParameter parameter) {
 		this.independentParameter = parameter;
@@ -103,8 +109,8 @@ public class WaterLossGraphModel {
 		for (List<Pair> lineData : allLineSeries) {
 			ArrayList<OutputData> outputData = new ArrayList<OutputData>();
 			for (Pair pair : lineData) {
-				outputData.add(new OutputData(pair.getXValue(), pair
-						.getYValue()));
+				outputData.add(new OutputData(pair.getXValue(),
+                        (Math.round(pair.getYValue() *1000.0) / 1000.0)));
 			}
 			outputDataForAllLines.add(outputData);
 		}
