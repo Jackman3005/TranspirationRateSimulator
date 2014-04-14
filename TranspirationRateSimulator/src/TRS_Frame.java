@@ -27,16 +27,16 @@ public class TRS_Frame extends Application {
 		mainPane.setVgap(25);
 		mainPane.setHgap(25);
 		mainPane.setPadding(new Insets(15));
-		mainPane.getColumnConstraints().add(new ColumnConstraints(500));
-		mainPane.getColumnConstraints().add(new ColumnConstraints(400));
+		mainPane.getColumnConstraints().add(new ColumnConstraints(450));
+		mainPane.getColumnConstraints().add(new ColumnConstraints(450));
 		mainPane.getRowConstraints().add(new RowConstraints(400));
 		mainPane.getRowConstraints().add(new RowConstraints(200));
 
 		WaterLossGraphModel graphModel = new WaterLossGraphModel();
 		mainPane.add(new PlotPanel(graphModel), 0, 0);
-		mainPane.add(new InputTable(), 1, 0);
+		mainPane.add(new InputTable(graphModel), 1, 0);
 		mainPane.add(new OutputTable(graphModel), 0, 1);
-		// mainPane.add(new Leaf().play(stage),1,1);
+		mainPane.add(new Leaf().play(stage), 1, 1);
 
 		Scene mainScene = new Scene(mainPane, 1000, 650, Color.LIGHTBLUE);
 		stage.setScene(mainScene);

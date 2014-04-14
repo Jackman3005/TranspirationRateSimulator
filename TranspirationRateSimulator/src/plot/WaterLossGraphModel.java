@@ -1,20 +1,41 @@
 package plot;
 
-import algorithm.LineBuilder;
-import algorithm.ParameterPackage;
-import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
+import algorithm.LineBuilder;
+import algorithm.ParameterPackage;
+import algorithm.ParameterPackageObserverInterface;
+
 public class WaterLossGraphModel {
+
+	private final class ParameterPackageObserver implements
+			ParameterPackageObserverInterface {
+		@Override
+		public void notifyParameterValueChanged() {
+			notifyObserversModelUpdated();
+		}
+	}
 
 	private SimulationParameter independentParameter = SimulationParameter.LeafWidth;
 	private final List<WaterLossGraphModelObserverInterface> observers = new ArrayList<>();
 	private double rangeMinimum = 1;
 	private double rangeMaximum = 100;
 	private double tickMarkIncrement = (this.rangeMaximum - this.rangeMinimum) / 6.0;
+	private List<ParameterPackage> parameterPackages = new ArrayList<>();
+
+	ParameterPackage DEFAULT_PARAMETER_PACKAGE = new ParameterPackage(1, 100,
+			200, 5, 15, 20, 50, 20);
+
+	private final ParameterPackageObserverInterface PARAMETER_PACKAGE_OBSERVER = new ParameterPackageObserver();
+
+	public WaterLossGraphModel() {
+		this.parameterPackages.add(this.DEFAULT_PARAMETER_PACKAGE);
+		this.DEFAULT_PARAMETER_PACKAGE
+				.addObserver(this.PARAMETER_PACKAGE_OBSERVER);
+	}
 
 	public List<XYChart.Series<Number, Number>> getAllLineSeriesForPlotting() {
 		double incrementBetweenDataPoints = (this.rangeMaximum - this.rangeMinimum) / 200;
@@ -36,17 +57,8 @@ public class WaterLossGraphModel {
 	private List<List<Pair>> getDataPointsForAllLines(
 			double incrementBetweenDataPoints) {
 
-		ParameterPackage parameterPackage = new ParameterPackage(1, 100, 200,
-				5, 15, 20, 50, 20);
-        ParameterPackage parameterPackage2 = new ParameterPackage(1, 100, 200,
-                15, 20, 30, 50, 20);
-		ArrayList<ParameterPackage> listOfUserEnteredParameterPackages = new ArrayList<ParameterPackage>();
-		listOfUserEnteredParameterPackages.add(parameterPackage);
-        listOfUserEnteredParameterPackages.add(parameterPackage2);
-
-
-        ArrayList<List<Pair>> listOfLineData = new ArrayList<List<Pair>>();
-		for (ParameterPackage setOfParameters : listOfUserEnteredParameterPackages) {
+		ArrayList<List<Pair>> listOfLineData = new ArrayList<List<Pair>>();
+		for (ParameterPackage setOfParameters : this.parameterPackages) {
 			ArrayList<Pair> line = LineBuilder.getLine(
 					this.independentParameter, this.rangeMinimum,
 					this.rangeMaximum, setOfParameters,
@@ -57,11 +69,23 @@ public class WaterLossGraphModel {
 		return listOfLineData;
 	}
 
+	public void setParameterPackages(List<ParameterPackage> parameterPackages) {
+		for (ParameterPackage parameterPackage : this.parameterPackages) {
+			parameterPackage.removeObserver(this.PARAMETER_PACKAGE_OBSERVER);
+		}
+		this.parameterPackages = parameterPackages;
+		for (ParameterPackage parameterPackage : this.parameterPackages) {
+			parameterPackage.addObserver(this.PARAMETER_PACKAGE_OBSERVER);
+		}
+	}
 
+	public List<ParameterPackage> getParameterPackages() {
+		return this.parameterPackages;
+	}
 
 	public void setIndependentParameter(SimulationParameter parameter) {
 		this.independentParameter = parameter;
-		notifyObserver();
+		notifyObserversModelUpdated();
 	}
 
 	public void addObserver(WaterLossGraphModelObserverInterface observer) {
@@ -72,7 +96,7 @@ public class WaterLossGraphModel {
 		this.observers.remove(observer);
 	}
 
-	private void notifyObserver() {
+	private void notifyObserversModelUpdated() {
 		for (WaterLossGraphModelObserverInterface observer : this.observers) {
 			observer.graphModelHasChanged();
 		}
@@ -95,7 +119,7 @@ public class WaterLossGraphModel {
 		this.tickMarkIncrement = tickMarkIncrement;
 		this.rangeMinimum = rangeMin;
 		this.rangeMaximum = rangeMax;
-		notifyObserver();
+		notifyObserversModelUpdated();
 	}
 
 	public SimulationParameter getIndependentVariable() {
@@ -109,8 +133,8 @@ public class WaterLossGraphModel {
 		for (List<Pair> lineData : allLineSeries) {
 			ArrayList<OutputData> outputData = new ArrayList<OutputData>();
 			for (Pair pair : lineData) {
-				outputData.add(new OutputData(pair.getXValue(),
-                        (Math.round(pair.getYValue() *1000.0) / 1000.0)));
+				outputData.add(new OutputData(pair.getXValue(), (Math
+						.round(pair.getYValue() * 1000.0) / 1000.0)));
 			}
 			outputDataForAllLines.add(outputData);
 		}

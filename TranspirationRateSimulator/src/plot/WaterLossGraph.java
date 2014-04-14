@@ -83,7 +83,7 @@ public class WaterLossGraph extends LineChart<Number, Number> {
 		int yBoundSpan = yUpperBound - yLowerBound;
 
 		xAxis.setTickUnit(this.graphModel.getTickUnitSize());
-		yAxis.setTickUnit(yBoundSpan / numberOfTickMarks);
+		yAxis.setTickUnit(yBoundSpan / (double) numberOfTickMarks);
 		xAxis.setUpperBound(this.graphModel.getXAxisRangeMaximum());
 		xAxis.setLowerBound(this.graphModel.getXAxisRangeMinimum());
 
