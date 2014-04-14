@@ -19,6 +19,11 @@ public class WaterLossGraph extends LineChart<Number, Number> {
 		public void graphModelHasChanged() {
 			plotLines();
 		}
+
+		@Override
+		public void inputDataChanged() {
+			plotLines();
+		}
 	}
 
 	public WaterLossGraph(NumberAxis xAxis, NumberAxis yAxis,
@@ -31,7 +36,7 @@ public class WaterLossGraph extends LineChart<Number, Number> {
 		setLegendVisible(false);
 
 		yAxis.setLabel("H20 Loss per Minute");
-		setTitle("Transpiration Rate Simulation");
+		setTitle("Simulation of H20 Loss per Minute");
 		xAxis.setLabel("");
 
 		graphModel.addObserver(new RedrawLinesObserver());

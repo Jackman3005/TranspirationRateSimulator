@@ -33,6 +33,10 @@ public class InputTable extends ScrollPane {
 		public void graphModelHasChanged() {
 			buildTable();
 		}
+
+		@Override
+		public void inputDataChanged() {
+		}
 	}
 
 	private final class RemoveLineButton extends Button {
@@ -82,6 +86,18 @@ public class InputTable extends ScrollPane {
 									Double.parseDouble(getText()));
 						} catch (NumberFormatException e) {
 						}
+					}
+				}
+			});
+
+			setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					try {
+						parameterPackage.setParameterValue(simulationParameter,
+								Double.parseDouble(getText()));
+					} catch (NumberFormatException e) {
 					}
 				}
 			});
@@ -196,8 +212,8 @@ public class InputTable extends ScrollPane {
 			List<TextField> rowOfInputFields = inputTextFields.get(i);
 			for (int j = 0; j < rowOfInputFields.size(); j++) {
 				TextField inputTextField = rowOfInputFields.get(j);
-				inputTextField.setMinWidth(100);
-				inputTextField.setMaxWidth(100);
+				inputTextField.setMinWidth(85);
+				inputTextField.setMaxWidth(85);
 				this.gridPane.add(inputTextField, 1 + j, i + 1);
 			}
 		}

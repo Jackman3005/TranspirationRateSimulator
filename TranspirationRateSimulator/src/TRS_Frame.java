@@ -7,6 +7,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import plot.PlotPanel;
+import plot.WaterLossGraph;
 import plot.WaterLossGraphModel;
 
 /**
@@ -39,6 +40,10 @@ public class TRS_Frame extends Application {
 		mainPane.add(new Leaf().play(stage), 1, 1);
 
 		Scene mainScene = new Scene(mainPane, 1000, 650, Color.LIGHTBLUE);
+		mainScene.getStylesheets().add(
+				WaterLossGraph.class.getResource("WaterLossGraphModel.css")
+						.toExternalForm());
+
 		stage.setScene(mainScene);
 		stage.show();
 

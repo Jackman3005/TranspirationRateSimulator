@@ -3,17 +3,21 @@
  * @version: 3/1/14
  */
 
-import com.sun.javafx.collections.ObservableListWrapper;
+import java.util.List;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import plot.OutputData;
 import plot.WaterLossGraphModel;
 import plot.WaterLossGraphModelObserverInterface;
 
-import java.util.List;
-
-public class OutputTable extends TableView<OutputData> {
+public class OutputTable extends TableView<ObservableList<OutputData>> {
 
 	private final class TableUpdatingModelObserver implements
 			WaterLossGraphModelObserverInterface {
@@ -21,43 +25,106 @@ public class OutputTable extends TableView<OutputData> {
 		public void graphModelHasChanged() {
 			rebuildTable();
 		}
+
+		@Override
+		public void inputDataChanged() {
+			rebuildTable();
+		}
 	}
+
+	// TABLE VIEW AND DATA
+
+	private ObservableList<ObservableList<OutputData>> data;
 
 	private final WaterLossGraphModel model;
 
 	public OutputTable(WaterLossGraphModel model) {
-		model.addObserver(new TableUpdatingModelObserver());
 		this.model = model;
-		maxHeightProperty().set(250);
+		this.model.addObserver(new TableUpdatingModelObserver());
 
 		rebuildTable();
 	}
 
-	private void rebuildTable() {
-
-		TableColumn<OutputData, Double> tickMarkValuesColumn = new TableColumn<OutputData, Double>(
-				this.model.getIndependentVariable().toString());
-		tickMarkValuesColumn
-				.setCellValueFactory(new PropertyValueFactory<OutputData, Double>(
-						"tickMark"));
-		tickMarkValuesColumn.setMinWidth(150);
+	public void rebuildTable() {
 		getColumns().clear();
-		getColumns().add(tickMarkValuesColumn);
+		this.data = FXCollections.observableArrayList();
 
-		List<List<OutputData>> outputTableData = this.model
+		List<List<OutputData>> listOfColumnData = this.model
 				.getOutputTableData();
 
-		for (int i = 1; i <= outputTableData.size(); i++) {
-			TableColumn<OutputData, Double> lineValuesAtTickMarksColumn = new TableColumn<OutputData, Double>(
-					"Line " + i);
-			lineValuesAtTickMarksColumn
-					.setCellValueFactory(new PropertyValueFactory<OutputData, Double>(
-							"value"));
-			lineValuesAtTickMarksColumn.setMinWidth(100);
-			getColumns().add(lineValuesAtTickMarksColumn);
+		try {
+
+			TableColumn<ObservableList<OutputData>, String> tickMarkValueColumn = new TableColumn<ObservableList<OutputData>, String>(
+					this.model.getIndependentVariable().toString());
+			tickMarkValueColumn.setMinWidth(180);
+			tickMarkValueColumn
+					.setCellValueFactory(new Callback<CellDataFeatures<ObservableList<OutputData>, String>, ObservableValue<String>>() {
+
+						@Override
+						public ObservableValue<String> call(
+								CellDataFeatures<ObservableList<OutputData>, String> param) {
+
+							return new SimpleStringProperty(param.getValue()
+									.get(0).getTickMark()
+									+ "");
+
+						}
+
+					});
+			getColumns().add(tickMarkValueColumn);
+
+			for (int i = 0; i < listOfColumnData.size(); i++) {
+
+				final int j = i;
+
+				TableColumn<ObservableList<OutputData>, String> valueColumn = new TableColumn<ObservableList<OutputData>, String>(
+						"Line " + (i + 1));
+
+				valueColumn
+						.setCellValueFactory(new Callback<CellDataFeatures<ObservableList<OutputData>, String>, ObservableValue<String>>() {
+
+							@Override
+							public ObservableValue<String> call(
+									CellDataFeatures<ObservableList<OutputData>, String> param) {
+
+								return new SimpleStringProperty(param
+										.getValue().get(j).getValue()
+										+ "");
+
+							}
+
+						});
+				getColumns().add(valueColumn);
+
+			}
+			if (listOfColumnData.size() > 0) {
+				for (int rowCount = 0; rowCount < listOfColumnData.get(0)
+						.size(); rowCount++) {
+
+					ObservableList<OutputData> row = FXCollections
+							.observableArrayList();
+
+					for (int i = 0; i < listOfColumnData.size(); i++) {
+
+						List<OutputData> list = listOfColumnData.get(i);
+						row.add(list.get(rowCount));
+					}
+
+					this.data.add(row);
+
+				}
+			}
+
+			setItems(this.data);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+			System.out.println("Error on Building Data");
+
 		}
 
-		setItems(new ObservableListWrapper<OutputData>(outputTableData.get(0)));
-
 	}
+
 }

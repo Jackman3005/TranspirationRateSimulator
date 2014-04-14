@@ -77,6 +77,7 @@ public class WaterLossGraphModel {
 		for (ParameterPackage parameterPackage : this.parameterPackages) {
 			parameterPackage.addObserver(this.PARAMETER_PACKAGE_OBSERVER);
 		}
+		notifyObserversInputDataChanged();
 	}
 
 	public List<ParameterPackage> getParameterPackages() {
@@ -99,6 +100,12 @@ public class WaterLossGraphModel {
 	private void notifyObserversModelUpdated() {
 		for (WaterLossGraphModelObserverInterface observer : this.observers) {
 			observer.graphModelHasChanged();
+		}
+	}
+
+	private void notifyObserversInputDataChanged() {
+		for (WaterLossGraphModelObserverInterface observer : this.observers) {
+			observer.inputDataChanged();
 		}
 	}
 
@@ -133,8 +140,9 @@ public class WaterLossGraphModel {
 		for (List<Pair> lineData : allLineSeries) {
 			ArrayList<OutputData> outputData = new ArrayList<OutputData>();
 			for (Pair pair : lineData) {
-				outputData.add(new OutputData(pair.getXValue(), (Math
-						.round(pair.getYValue() * 1000.0) / 1000.0)));
+				outputData.add(new OutputData(
+						(Math.round(pair.getXValue() * 1000.0) / 1000.0), (Math
+								.round(pair.getYValue() * 1000.0) / 1000.0)));
 			}
 			outputDataForAllLines.add(outputData);
 		}
