@@ -38,15 +38,6 @@ public class MainFrame extends Application {
 	private Scene createMainScene(final Stage stage) {
 		GridPane mainPane = new GridPane();
 
-		// mainPane.setVgap(25);
-		// mainPane.setHgap(25);
-		// mainPane.setPadding(new Insets(2, 15, 15, 0));
-		// mainPane.getColumnConstraints().add(new ColumnConstraints(450));
-		// mainPane.getColumnConstraints().add(new ColumnConstraints(450));
-		// mainPane.getRowConstraints().add(new RowConstraints(15));
-		// mainPane.getRowConstraints().add(new RowConstraints(400));
-		// mainPane.getRowConstraints().add(new RowConstraints(200));
-
 		WaterLossGraphModel graphModel = new WaterLossGraphModel();
 
 		MenuBar menuBar = createMenuBar(graphModel);
@@ -63,8 +54,8 @@ public class MainFrame extends Application {
 				Priority.ALWAYS, Priority.ALWAYS, new Insets(15));
 		GridPane.setConstraints(outputTable, 0, 2, 1, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS,
 				Priority.ALWAYS, new Insets(15));
-		GridPane.setConstraints(leaf, 1, 1, 1, 1, HPos.RIGHT, VPos.TOP, Priority.ALWAYS,
-				Priority.ALWAYS, new Insets(15));
+		GridPane.setConstraints(leaf, 1, 1, 1, 1, HPos.RIGHT, VPos.TOP, Priority.NEVER,
+				Priority.NEVER, new Insets(15));
 
 		mainPane.getChildren().addAll(menuBar, plotPanel, parameterInputTable, outputTable, leaf);
 

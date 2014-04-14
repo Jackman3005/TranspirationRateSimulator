@@ -2,13 +2,13 @@ package com.transpirationRateSimulator.plot;
 
 import java.util.List;
 
-import com.transpirationRateSimulator.model.WaterLossGraphModel;
-import com.transpirationRateSimulator.model.WaterLossGraphModelObserverInterface;
-
 import javafx.collections.ObservableList;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+
+import com.transpirationRateSimulator.model.WaterLossGraphModel;
+import com.transpirationRateSimulator.model.WaterLossGraphModelObserverInterface;
 
 public class WaterLossGraph extends LineChart<Number, Number> {
 
@@ -16,8 +16,7 @@ public class WaterLossGraph extends LineChart<Number, Number> {
 	private final NumberAxis xAxis2;
 	private final NumberAxis yAxis2;
 
-	private final class RedrawLinesObserver implements
-			WaterLossGraphModelObserverInterface {
+	private final class RedrawLinesObserver implements WaterLossGraphModelObserverInterface {
 		@Override
 		public void graphModelHasChanged() {
 			plotLines();
@@ -29,8 +28,7 @@ public class WaterLossGraph extends LineChart<Number, Number> {
 		}
 	}
 
-	public WaterLossGraph(NumberAxis xAxis, NumberAxis yAxis,
-			WaterLossGraphModel graphModel) {
+	public WaterLossGraph(NumberAxis xAxis, NumberAxis yAxis, WaterLossGraphModel graphModel) {
 		super(xAxis, yAxis);
 		this.xAxis2 = xAxis;
 		this.yAxis2 = yAxis;
@@ -58,8 +56,8 @@ public class WaterLossGraph extends LineChart<Number, Number> {
 		}
 	}
 
-	private void configureAxisRangesAndTickMarks(NumberAxis xAxis,
-			NumberAxis yAxis, List<XYChart.Series<Number, Number>> allLineSeries) {
+	private void configureAxisRangesAndTickMarks(NumberAxis xAxis, NumberAxis yAxis,
+			List<XYChart.Series<Number, Number>> allLineSeries) {
 		double yMin = Double.MAX_VALUE;
 		double yMax = -Double.MAX_VALUE;
 		for (Series<Number, Number> series : allLineSeries) {

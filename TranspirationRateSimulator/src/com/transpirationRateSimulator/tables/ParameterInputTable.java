@@ -3,6 +3,7 @@ package com.transpirationRateSimulator.tables;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -29,8 +30,7 @@ public class ParameterInputTable extends ScrollPane {
 	private final WaterLossGraphModel model;
 	private final GridPane gridPane;
 
-	private final class InputTableModelObserver implements
-			WaterLossGraphModelObserverInterface {
+	private final class InputTableModelObserver implements WaterLossGraphModelObserverInterface {
 		@Override
 		public void graphModelHasChanged() {
 			buildTable();
@@ -56,8 +56,7 @@ public class ParameterInputTable extends ScrollPane {
 							.getParameterPackages();
 					if (parameterPackages.size() > 1) {
 						parameterPackages.remove(parameterPackage);
-						ParameterInputTable.this.model
-								.setParameterPackages(parameterPackages);
+						ParameterInputTable.this.model.setParameterPackages(parameterPackages);
 						buildTable();
 					}
 				}
@@ -72,22 +71,33 @@ public class ParameterInputTable extends ScrollPane {
 		public NumbersOnlyTextField(final ParameterPackage parameterPackage,
 				final SimulationParameter simulationParameter) {
 
-			setText(parameterPackage.getParameterValue(simulationParameter)
-					+ "");
+			setText(parameterPackage.getParameterValue(simulationParameter) + "");
 
 			focusedProperty().addListener(new ChangeListener<Boolean>() {
 
 				@Override
-				public void changed(
-						ObservableValue<? extends Boolean> observable,
+				public void changed(ObservableValue<? extends Boolean> observable,
 						Boolean oldValue, Boolean currentlyFocused) {
+
+					// When focus is lost on the text field. the value of the
+					// field is set on the Parameter Package
 					if (!currentlyFocused) {
 						try {
-							parameterPackage.setParameterValue(
-									simulationParameter,
+							parameterPackage.setParameterValue(simulationParameter,
 									Double.parseDouble(getText()));
 						} catch (NumberFormatException e) {
 						}
+					} else {
+						// When focus is gained on the text field the text is
+						// selected
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								if (isFocused() && !getText().isEmpty()) {
+									selectAll();
+								}
+							}
+						});
 					}
 				}
 			});
@@ -138,8 +148,7 @@ public class ParameterInputTable extends ScrollPane {
 
 	private void buildTable() {
 		this.gridPane.getChildren().clear();
-		List<ParameterPackage> parameterPackages = this.model
-				.getParameterPackages();
+		List<ParameterPackage> parameterPackages = this.model.getParameterPackages();
 		int numberOfLines = parameterPackages.size();
 		SimulationParameter[] parameters = SimulationParameter.values();
 		ArrayList<List<TextField>> inputTextFields = new ArrayList<List<TextField>>();
@@ -168,12 +177,11 @@ public class ParameterInputTable extends ScrollPane {
 			ArrayList<TextField> rowOfInputFields = new ArrayList<TextField>();
 			inputTextFields.add(rowOfInputFields);
 			for (int j = 0; j < numberOfLines; j++) {
-				ParameterPackage parameterPackageMatchingThisColumn = parameterPackages
-						.get(j);
+				ParameterPackage parameterPackageMatchingThisColumn = parameterPackages.get(j);
 				TextField inputTextField = new NumbersOnlyTextField(
 						parameterPackageMatchingThisColumn, parameters[i]);
-				listOfRemoveLineButtons.add(new RemoveLineButton(
-						parameterPackageMatchingThisColumn));
+				listOfRemoveLineButtons
+						.add(new RemoveLineButton(parameterPackageMatchingThisColumn));
 				if (parameters[i].equals(this.model.getIndependentVariable())) {
 					inputTextField.setDisable(true);
 					inputTextField.setText("");
@@ -185,8 +193,7 @@ public class ParameterInputTable extends ScrollPane {
 		}
 
 		Label parameterLabel = new Label("Parameters");
-		parameterLabel
-				.setFont(new Font(parameterLabel.getFont().getName(), 20));
+		parameterLabel.setFont(new Font(parameterLabel.getFont().getName(), 20));
 		int headerColumnCount = 0;
 		this.gridPane.add(parameterLabel, headerColumnCount, 0);
 
@@ -194,16 +201,13 @@ public class ParameterInputTable extends ScrollPane {
 			Label lineLabel = new Label("Line " + headerColumnCount);
 
 			lineLabel.setFont(new Font(lineLabel.getFont().getName(), 20));
-			Button removeLineButton = listOfRemoveLineButtons
-					.get(headerColumnCount - 1);
+			Button removeLineButton = listOfRemoveLineButtons.get(headerColumnCount - 1);
 
 			AnchorPane paneForLabelAndRemoveLineButton = new AnchorPane();
-			paneForLabelAndRemoveLineButton.getChildren().addAll(lineLabel,
-					removeLineButton);
+			paneForLabelAndRemoveLineButton.getChildren().addAll(lineLabel, removeLineButton);
 			AnchorPane.setLeftAnchor(lineLabel, 0d);
 			AnchorPane.setRightAnchor(removeLineButton, 10d);
-			this.gridPane.add(paneForLabelAndRemoveLineButton,
-					headerColumnCount, 0);
+			this.gridPane.add(paneForLabelAndRemoveLineButton, headerColumnCount, 0);
 		}
 		addAddLineButton(headerColumnCount);
 
@@ -238,8 +242,7 @@ public class ParameterInputTable extends ScrollPane {
 				ParameterPackage newParameterPackage_AKA_NewLine = new ParameterPackage(
 						lastParameterPackageInList);
 				parameterPackages.add(newParameterPackage_AKA_NewLine);
-				ParameterInputTable.this.model
-						.setParameterPackages(parameterPackages);
+				ParameterInputTable.this.model.setParameterPackages(parameterPackages);
 				buildTable();
 			}
 		});

@@ -1,15 +1,15 @@
 package com.transpirationRateSimulator.plot;
 
-import com.transpirationRateSimulator.model.WaterLossGraphModel;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.layout.BorderPane;
 
+import com.transpirationRateSimulator.model.WaterLossGraphModel;
+
 public class PlotPanel extends BorderPane {
-	private final class IndependentVariableListener implements
-			EventHandler<ActionEvent> {
+	private final class IndependentVariableListener implements EventHandler<ActionEvent> {
 		private final WaterLossGraphModel graphModel;
 		private final AxisParameterChooserAndLabel parameterChooser;
 
@@ -21,21 +21,18 @@ public class PlotPanel extends BorderPane {
 
 		@Override
 		public void handle(ActionEvent event) {
-			this.graphModel.setIndependentParameter(this.parameterChooser
-					.getValue());
+			this.graphModel.setIndependentParameter(this.parameterChooser.getValue());
 		}
 	}
 
 	public PlotPanel(WaterLossGraphModel graphModel) {
 
-		WaterLossGraph graph = new WaterLossGraph(new NumberAxis(),
-				new NumberAxis(), graphModel);
+		WaterLossGraph graph = new WaterLossGraph(new NumberAxis(), new NumberAxis(), graphModel);
 		AxisParameterChooserAndLabel parameterChooser = new AxisParameterChooserAndLabel();
 
-		parameterChooser.setOnAction(new IndependentVariableListener(
-				graphModel, parameterChooser));
-		AxisSettingsButton axisSettingsButton = new AxisSettingsButton(
-				graphModel);
+		parameterChooser.setOnAction(new IndependentVariableListener(graphModel, parameterChooser));
+		AxisSettingsButton axisSettingsButton = new AxisSettingsButton(graphModel);
+		BorderPane.setMargin(parameterChooser, new Insets(0, 0, 15, 0));
 		setTop(graph);
 		setCenter(parameterChooser);
 		setLeft(axisSettingsButton);
