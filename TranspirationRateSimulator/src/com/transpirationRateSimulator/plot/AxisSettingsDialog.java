@@ -2,8 +2,6 @@ package com.transpirationRateSimulator.plot;
 
 import java.text.DecimalFormat;
 
-import com.transpirationRateSimulator.model.WaterLossGraphModel;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -22,6 +20,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import com.transpirationRateSimulator.model.WaterLossGraphModel;
 
 public class AxisSettingsDialog extends Stage {
 	private final class SaveAndCloseWhenEnterPressedEventHandler implements
@@ -262,7 +262,7 @@ public class AxisSettingsDialog extends Stage {
 			double range = rangeMaximum - rangeMinimum;
 
 			this.tickMarkMaximum = (range / 3);
-			this.tickMarkMinimum = (range / 50);
+			this.tickMarkMinimum = Math.min(.1, (range / 50));
 
 			double valueToSetForSlider = this.tickMarkSizeSlider.getValue();
 			if (valueToSetForSlider > this.tickMarkMaximum

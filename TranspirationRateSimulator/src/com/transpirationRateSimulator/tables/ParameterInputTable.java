@@ -1,4 +1,5 @@
 package com.transpirationRateSimulator.tables;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,6 +127,8 @@ public class ParameterInputTable extends ScrollPane {
 		this.model = model;
 		setStyle("-fx-background-color:transparent;");
 		this.gridPane = new GridPane();
+		setMinWidth(412);
+		setMinHeight(245);
 		setMaxHeight(245);
 		setContent(this.gridPane);
 		setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
@@ -235,7 +238,8 @@ public class ParameterInputTable extends ScrollPane {
 				ParameterPackage newParameterPackage_AKA_NewLine = new ParameterPackage(
 						lastParameterPackageInList);
 				parameterPackages.add(newParameterPackage_AKA_NewLine);
-				ParameterInputTable.this.model.setParameterPackages(parameterPackages);
+				ParameterInputTable.this.model
+						.setParameterPackages(parameterPackages);
 				buildTable();
 			}
 		});

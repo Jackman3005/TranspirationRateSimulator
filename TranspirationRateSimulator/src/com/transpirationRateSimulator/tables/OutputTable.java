@@ -1,4 +1,5 @@
 package com.transpirationRateSimulator.tables;
+
 import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -36,7 +37,6 @@ public class OutputTable extends TableView<ObservableList<OutputData>> {
 	public OutputTable(WaterLossGraphModel model) {
 		this.model = model;
 		this.model.addObserver(new TableUpdatingModelObserver());
-
 		rebuildTable();
 	}
 

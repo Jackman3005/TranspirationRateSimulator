@@ -1,13 +1,14 @@
 package com.transpirationRateSimulator;
 
 import javafx.application.Application;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -37,31 +38,49 @@ public class MainFrame extends Application {
 	private Scene createMainScene(final Stage stage) {
 		GridPane mainPane = new GridPane();
 
-		mainPane.setVgap(25);
-		mainPane.setHgap(25);
-		mainPane.setPadding(new Insets(0, 15, 0, 15));
-		mainPane.getColumnConstraints().add(new ColumnConstraints(450));
-		mainPane.getColumnConstraints().add(new ColumnConstraints(450));
-		mainPane.getRowConstraints().add(new RowConstraints(10));
-		mainPane.getRowConstraints().add(new RowConstraints(400));
-		mainPane.getRowConstraints().add(new RowConstraints(200));
-		MenuBar menuBar = new MenuBar();
-		Menu aboutMenu = new AboutMenu();
-		menuBar.getMenus().add(aboutMenu);
-		mainPane.add(menuBar, 0, 0);
+		// mainPane.setVgap(25);
+		// mainPane.setHgap(25);
+		// mainPane.setPadding(new Insets(2, 15, 15, 0));
+		// mainPane.getColumnConstraints().add(new ColumnConstraints(450));
+		// mainPane.getColumnConstraints().add(new ColumnConstraints(450));
+		// mainPane.getRowConstraints().add(new RowConstraints(15));
+		// mainPane.getRowConstraints().add(new RowConstraints(400));
+		// mainPane.getRowConstraints().add(new RowConstraints(200));
 
 		WaterLossGraphModel graphModel = new WaterLossGraphModel();
-		mainPane.add(new PlotPanel(graphModel), 0, 1);
-		mainPane.add(new ParameterInputTable(graphModel), 1, 1);
-		mainPane.add(new OutputTable(graphModel), 0, 2);
-		mainPane.add(new Leaf().play(stage), 1, 2);
 
-		Scene mainScene = new Scene(mainPane, 1000, 650, Color.LIGHTBLUE);
+		MenuBar menuBar = createMenuBar(graphModel);
+		PlotPanel plotPanel = new PlotPanel(graphModel);
+		ParameterInputTable parameterInputTable = new ParameterInputTable(graphModel);
+		OutputTable outputTable = new OutputTable(graphModel);
+		Leaf leaf = new Leaf();
+
+		GridPane.setConstraints(menuBar, 0, 0, 2, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS,
+				Priority.NEVER, new Insets(0));
+		GridPane.setConstraints(plotPanel, 1, 2, 1, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS,
+				Priority.ALWAYS, new Insets(15));
+		GridPane.setConstraints(parameterInputTable, 0, 1, 1, 1, HPos.LEFT, VPos.TOP,
+				Priority.ALWAYS, Priority.ALWAYS, new Insets(15));
+		GridPane.setConstraints(outputTable, 0, 2, 1, 1, HPos.LEFT, VPos.TOP, Priority.ALWAYS,
+				Priority.ALWAYS, new Insets(15));
+		GridPane.setConstraints(leaf, 1, 1, 1, 1, HPos.RIGHT, VPos.TOP, Priority.ALWAYS,
+				Priority.ALWAYS, new Insets(15));
+
+		mainPane.getChildren().addAll(menuBar, plotPanel, parameterInputTable, outputTable, leaf);
+
+		Scene mainScene = new Scene(mainPane, Color.LIGHTBLUE);
 
 		mainScene.getStylesheets().add(
-				WaterLossGraph.class.getResource("WaterLossGraphModel.css")
-						.toExternalForm());
+				WaterLossGraph.class.getResource("WaterLossGraphModel.css").toExternalForm());
 
 		return mainScene;
+	}
+
+	private MenuBar createMenuBar(WaterLossGraphModel model) {
+		MenuBar menuBar = new MenuBar();
+		Menu aboutMenu = new AboutMenu();
+		FileMenu fileMenu = new FileMenu(model);
+		menuBar.getMenus().addAll(fileMenu, aboutMenu);
+		return menuBar;
 	}
 }
