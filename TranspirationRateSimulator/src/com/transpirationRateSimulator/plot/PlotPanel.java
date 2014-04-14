@@ -1,4 +1,6 @@
-package plot;
+package com.transpirationRateSimulator.plot;
+
+import com.transpirationRateSimulator.model.WaterLossGraphModel;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

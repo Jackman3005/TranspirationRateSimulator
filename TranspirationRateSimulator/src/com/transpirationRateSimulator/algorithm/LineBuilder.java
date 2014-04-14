@@ -1,14 +1,11 @@
-package algorithm;
+package com.transpirationRateSimulator.algorithm;
 
 import java.util.ArrayList;
 
-import plot.Pair;
-import plot.SimulationParameter;
+import com.transpirationRateSimulator.model.ParameterPackage;
+import com.transpirationRateSimulator.model.SimulationParameter;
+import com.transpirationRateSimulator.plot.Pair;
 
-/**
- * @author: Levi
- * @version: 2/16/14
- */
 public class LineBuilder {
 
 	public static ArrayList<Pair> getLine(

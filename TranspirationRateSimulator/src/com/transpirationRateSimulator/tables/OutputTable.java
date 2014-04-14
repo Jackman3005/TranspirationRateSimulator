@@ -1,8 +1,4 @@
-/**
- * @author: Zhaofei
- * @version: 3/1/14
- */
-
+package com.transpirationRateSimulator.tables;
 import java.util.List;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -13,9 +9,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
-import plot.OutputData;
-import plot.WaterLossGraphModel;
-import plot.WaterLossGraphModelObserverInterface;
+
+import com.transpirationRateSimulator.model.OutputData;
+import com.transpirationRateSimulator.model.WaterLossGraphModel;
+import com.transpirationRateSimulator.model.WaterLossGraphModelObserverInterface;
 
 public class OutputTable extends TableView<ObservableList<OutputData>> {
 
@@ -31,8 +28,6 @@ public class OutputTable extends TableView<ObservableList<OutputData>> {
 			rebuildTable();
 		}
 	}
-
-	// TABLE VIEW AND DATA
 
 	private ObservableList<ObservableList<OutputData>> data;
 
@@ -63,39 +58,28 @@ public class OutputTable extends TableView<ObservableList<OutputData>> {
 						@Override
 						public ObservableValue<String> call(
 								CellDataFeatures<ObservableList<OutputData>, String> param) {
-
 							return new SimpleStringProperty(param.getValue()
 									.get(0).getTickMark()
 									+ "");
-
 						}
-
 					});
 			getColumns().add(tickMarkValueColumn);
 
 			for (int i = 0; i < listOfColumnData.size(); i++) {
-
 				final int j = i;
-
 				TableColumn<ObservableList<OutputData>, String> valueColumn = new TableColumn<ObservableList<OutputData>, String>(
 						"Line " + (i + 1));
-
 				valueColumn
 						.setCellValueFactory(new Callback<CellDataFeatures<ObservableList<OutputData>, String>, ObservableValue<String>>() {
-
 							@Override
 							public ObservableValue<String> call(
 									CellDataFeatures<ObservableList<OutputData>, String> param) {
-
 								return new SimpleStringProperty(param
 										.getValue().get(j).getValue()
 										+ "");
-
 							}
-
 						});
 				getColumns().add(valueColumn);
-
 			}
 			if (listOfColumnData.size() > 0) {
 				for (int rowCount = 0; rowCount < listOfColumnData.get(0)
@@ -114,15 +98,10 @@ public class OutputTable extends TableView<ObservableList<OutputData>> {
 
 				}
 			}
-
 			setItems(this.data);
 
 		} catch (Exception e) {
-
-			e.printStackTrace();
-
-			System.out.println("Error on Building Data");
-
+			System.out.println("Error on Building Data For Output Table");
 		}
 
 	}

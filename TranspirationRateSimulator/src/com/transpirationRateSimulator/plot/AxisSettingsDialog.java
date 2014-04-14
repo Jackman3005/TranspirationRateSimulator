@@ -1,6 +1,8 @@
-package plot;
+package com.transpirationRateSimulator.plot;
 
 import java.text.DecimalFormat;
+
+import com.transpirationRateSimulator.model.WaterLossGraphModel;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

@@ -1,3 +1,4 @@
+package com.transpirationRateSimulator.tables;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +15,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import plot.SimulationParameter;
-import plot.WaterLossGraphModel;
-import plot.WaterLossGraphModelObserverInterface;
-import algorithm.ParameterPackage;
 
 import com.sun.javafx.tk.FontMetrics;
 import com.sun.javafx.tk.Toolkit;
+import com.transpirationRateSimulator.model.ParameterPackage;
+import com.transpirationRateSimulator.model.SimulationParameter;
+import com.transpirationRateSimulator.model.WaterLossGraphModel;
+import com.transpirationRateSimulator.model.WaterLossGraphModelObserverInterface;
 
-public class InputTable extends ScrollPane {
+public class ParameterInputTable extends ScrollPane {
 
 	private final WaterLossGraphModel model;
 	private final GridPane gridPane;
@@ -50,11 +51,11 @@ public class InputTable extends ScrollPane {
 
 				@Override
 				public void handle(ActionEvent event) {
-					List<ParameterPackage> parameterPackages = InputTable.this.model
+					List<ParameterPackage> parameterPackages = ParameterInputTable.this.model
 							.getParameterPackages();
 					if (parameterPackages.size() > 1) {
 						parameterPackages.remove(parameterPackage);
-						InputTable.this.model
+						ParameterInputTable.this.model
 								.setParameterPackages(parameterPackages);
 						buildTable();
 					}
@@ -121,7 +122,7 @@ public class InputTable extends ScrollPane {
 		}
 	}
 
-	public InputTable(WaterLossGraphModel model) {
+	public ParameterInputTable(WaterLossGraphModel model) {
 		this.model = model;
 		setStyle("-fx-background-color:transparent;");
 		this.gridPane = new GridPane();
@@ -227,14 +228,14 @@ public class InputTable extends ScrollPane {
 
 			@Override
 			public void handle(ActionEvent event) {
-				List<ParameterPackage> parameterPackages = InputTable.this.model
+				List<ParameterPackage> parameterPackages = ParameterInputTable.this.model
 						.getParameterPackages();
 				ParameterPackage lastParameterPackageInList = parameterPackages
 						.get(parameterPackages.size() - 1);
 				ParameterPackage newParameterPackage_AKA_NewLine = new ParameterPackage(
 						lastParameterPackageInList);
 				parameterPackages.add(newParameterPackage_AKA_NewLine);
-				InputTable.this.model.setParameterPackages(parameterPackages);
+				ParameterInputTable.this.model.setParameterPackages(parameterPackages);
 				buildTable();
 			}
 		});

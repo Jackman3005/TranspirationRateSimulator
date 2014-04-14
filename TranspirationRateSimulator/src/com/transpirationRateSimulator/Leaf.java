@@ -1,4 +1,4 @@
-
+package com.transpirationRateSimulator;
 import java.util.Random;
 
 import javafx.animation.AnimationTimer;
@@ -8,11 +8,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-
-/**
- * @author: Junpeng Li
- * @version: 3/26/14
- */
 
 public class Leaf {
 
@@ -52,23 +47,14 @@ public class Leaf {
 
 		canvas.getChildren().add(root);
 
-		// final Scene scene = new Scene(canvas, 620, 350, Color.BLACK);
-		// scene.getStylesheets().add(TRS_Frame.class.getResource("application.css").toExternalForm());
-
-		String image = TRS_Frame.class.getResource("leaf.gif").toExternalForm();
+		String image = MainFrame.class.getResource("leaf.gif").toExternalForm();
 		canvas.setStyle("-fx-background-image: url('"
 				+ image
 				+ "'); -fx-background-position: center center;  -fx-background-repeat: no-repeat;");
 
-		// primaryStage.setScene(scene);
-		// primaryStage.show();
 		new AnimationTimer() {
 			@Override
 			public void handle(long now) {
-				// final double width = 0.5 * primaryStage.getWidth();
-				// final double height = 0.2 * primaryStage.getHeight();
-				// final double radius = Math.sqrt(2) *
-				// Math.max(0.1*primaryStage.getWidth(),0.1*primaryStage.getHeight());
 				final double radius = 70;
 				for (int i = 0; i < STAR_COUNT; i++) {
 					final Node node = nodes[i];

@@ -1,4 +1,4 @@
-package plot;
+package com.transpirationRateSimulator.plot;
 
 /**
  * @author: Levi

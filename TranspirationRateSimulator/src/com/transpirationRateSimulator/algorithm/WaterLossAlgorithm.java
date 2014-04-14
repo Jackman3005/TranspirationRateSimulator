@@ -1,11 +1,8 @@
-package algorithm;
+package com.transpirationRateSimulator.algorithm;
 
-import plot.SimulationParameter;
+import com.transpirationRateSimulator.model.ParameterPackage;
+import com.transpirationRateSimulator.model.SimulationParameter;
 
-/**
- * @author: Levi
- * @version: 2/15/14
- */
 public class WaterLossAlgorithm {
 
 	// Constants

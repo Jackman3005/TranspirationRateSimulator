@@ -1,9 +1,8 @@
-package algorithm;
+package com.transpirationRateSimulator.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import plot.SimulationParameter;
 
 public class ParameterPackage {
 
@@ -43,56 +42,64 @@ public class ParameterPackage {
 			if (this.leafArea != newValue) {
 				this.leafArea = newValue;
 			} else {
-				return;
+				return;// Prevents notifying observers when There isn't a new
+						// value
 			}
 			break;
 		case LeafWidth:
 			if (this.leafWidth != newValue) {
 				this.leafWidth = newValue;
 			} else {
-				return;
+				return;// Prevents notifying observers when There isn't a new
+						// value
 			}
 			break;
 		case RelativeHumidityOfAir:
 			if (this.humidity != newValue) {
 				this.humidity = newValue;
 			} else {
-				return;
+				return;// Prevents notifying observers when There isn't a new
+						// value
 			}
 			break;
 		case StomaDensity:
 			if (this.stomaDensity != newValue) {
 				this.stomaDensity = newValue;
 			} else {
-				return;
+				return;// Prevents notifying observers when There isn't a new
+						// value
 			}
 			break;
 		case StomaDepth:
 			if (this.stomaDepth != newValue) {
 				this.stomaDepth = newValue;
 			} else {
-				return;
+				return;// Prevents notifying observers when There isn't a new
+						// value
 			}
 			break;
 		case StomaRadius:
 			if (this.stomaRadius != newValue) {
 				this.stomaRadius = newValue;
 			} else {
-				return;
+				return;// Prevents notifying observers when There isn't a new
+						// value
 			}
 			break;
 		case Temperature:
 			if (this.temperature != newValue) {
 				this.temperature = newValue;
 			} else {
-				return;
+				return;// Prevents notifying observers when There isn't a new
+						// value
 			}
 			break;
 		case WindSpeed:
 			if (this.windspeed != newValue) {
 				this.windspeed = newValue;
 			} else {
-				return;
+				return;// Prevents notifying observers when There isn't a new
+						// value
 			}
 			break;
 		}
@@ -117,11 +124,13 @@ public class ParameterPackage {
 			return this.temperature;
 		case WindSpeed:
 			return this.windspeed;
+		default:
+			return -1;
 		}
-
-		return -1;
 	}
 
+	// This allows the object to be observable. Notifying it's observers when it
+	// is updated.
 	public void addObserver(ParameterPackageObserverInterface observer) {
 		this.observers.add(observer);
 	}

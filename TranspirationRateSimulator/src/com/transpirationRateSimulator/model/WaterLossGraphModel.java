@@ -1,13 +1,13 @@
-package plot;
+package com.transpirationRateSimulator.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.transpirationRateSimulator.algorithm.LineBuilder;
+import com.transpirationRateSimulator.plot.Pair;
+
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
-import algorithm.LineBuilder;
-import algorithm.ParameterPackage;
-import algorithm.ParameterPackageObserverInterface;
 
 public class WaterLossGraphModel {
 

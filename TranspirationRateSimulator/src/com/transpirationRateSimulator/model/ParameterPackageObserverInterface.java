@@ -1,4 +1,4 @@
-package algorithm;
+package com.transpirationRateSimulator.model;
 
 public interface ParameterPackageObserverInterface {
 

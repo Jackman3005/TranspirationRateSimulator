@@ -1,4 +1,4 @@
-package plot;
+package com.transpirationRateSimulator.model;
 
 public enum SimulationParameter {
 	LeafWidth {

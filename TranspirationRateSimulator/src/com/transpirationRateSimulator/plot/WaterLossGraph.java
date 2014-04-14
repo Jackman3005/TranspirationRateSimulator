@@ -1,6 +1,9 @@
-package plot;
+package com.transpirationRateSimulator.plot;
 
 import java.util.List;
+
+import com.transpirationRateSimulator.model.WaterLossGraphModel;
+import com.transpirationRateSimulator.model.WaterLossGraphModelObserverInterface;
 
 import javafx.collections.ObservableList;
 import javafx.scene.chart.LineChart;

@@ -1,10 +1,11 @@
-package plot;
+package com.transpirationRateSimulator.plot;
 
 import java.util.Arrays;
 
 import javafx.scene.control.ComboBox;
 
 import com.sun.javafx.collections.ObservableListWrapper;
+import com.transpirationRateSimulator.model.SimulationParameter;
 
 public class AxisParameterChooserAndLabel extends ComboBox<SimulationParameter> {
 

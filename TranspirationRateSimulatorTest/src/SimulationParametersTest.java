@@ -1,4 +1,5 @@
-import plot.SimulationParameter;
+import com.transpirationRateSimulator.model.SimulationParameter;
+
 import TestHelpers.TestCaseHelper;
 
 

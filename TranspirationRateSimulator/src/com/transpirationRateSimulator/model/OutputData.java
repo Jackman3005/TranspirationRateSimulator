@@ -1,4 +1,4 @@
-package plot;
+package com.transpirationRateSimulator.model;
 
 import javafx.beans.property.SimpleDoubleProperty;
 
